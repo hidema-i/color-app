@@ -1,27 +1,35 @@
-// import "./App.css";
-
+// ReactとValuesライブラリをインポートする
 import { useState } from "react";
 import Values from "values.js";
+
+// SingleColorコンポーネントをインポートする
 import SingleColor from "./SingleColor";
 
 function App() {
+  // state変数の初期値を定義する
   const [color, setColor] = useState("");
   const [error, setError] = useState(false);
   const [list, setList] = useState(new Values("#ffffff").all(1));
 
+  // フォームのsubmitイベントを処理する関数
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      let colors = new Values(color).all(1);
+      // 入力された色の値を解析して、配列に格納する
+      let colors = new Values(color).all(10);
+      // 配列をstate変数にセットする
       setList(colors);
     } catch (error) {
+      // エラーが発生した場合、state変数を変更する
       setError(true);
       console.log(error);
     }
   };
 
+  // JSXを返す
   return (
     <>
+      {/* 色を生成するためのフォーム */}
       <section className="container">
         <h3>color generator</h3>
         <form onSubmit={handleSubmit}>
@@ -37,6 +45,7 @@ function App() {
           </button>
         </form>
       </section>
+      {/* 生成された色を表示するセクション */}
       <section className="colors">
         {list.map((color, index) => {
           return (
@@ -53,4 +62,5 @@ function App() {
   );
 }
 
+// Appコンポーネントをエクスポートする
 export default App;
